@@ -75,6 +75,13 @@ const productSchema = new mongoose.Schema(
       trim: true,
       default: 'None'
     },
+    sku: {
+      type: String,
+      trim: true,
+      default: null,
+      unique: true,
+      sparse: true
+    },
     description: {
       type: String,
       trim: true,

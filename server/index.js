@@ -74,8 +74,14 @@ mongoose.connection.on('disconnected', function () {
 })
 
 mongoose.connect(MONGODB_URI, { serverSelectionTimeoutMS: 8000 })
-  .then(function () {
+  .then(async function () {
     console.log('MongoDB connected')
+    // Sync indexes: drops stale indexes (e.g. old non-sparse sku_1) and recreates
+    // them from the current schema so unique constraints never block valid inserts.
+    try {
+      const Product = require('./models/Product')
+      await Product.syncIndexes()
+    } catch (e) { console.warn('[indexes] syncIndexes warning:', e.message) }
     // Suppress any mongoose.disconnect() the AI wrote in seed — server owns the connection
     ;(function(){ var _d = mongoose.disconnect.bind(mongoose); mongoose.disconnect = function(){ return Promise.resolve(); }; try { require('./seed') } catch(e) { console.warn('Seed skipped:', e.message) } setTimeout(function(){ mongoose.disconnect = _d; }, 8000); })()
     app.listen(PORT, function () { console.log('Server ready on port ' + PORT) })
