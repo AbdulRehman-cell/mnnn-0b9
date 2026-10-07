@@ -180,7 +180,7 @@ export default function Shop() {
       await axios.post('/api/cartitems', {
         productId: product._id || product.slug,
         name: product.name,
-        image: product.images,
+        image: Array.isArray(product.images) ? product.images[0] : product.images,
         price: product.price,
         quantity: 1
       });
@@ -515,7 +515,7 @@ export default function Shop() {
                         {/* Product Image Area */}
                         <div style={{ position: 'relative', background: 'var(--surface-2)', paddingBottom: '100%', overflow: 'hidden' }}>
                           <img 
-                            src={product.images} 
+                            src={(Array.isArray(product.images) ? product.images[0] : product.images) || 'https://picsum.photos/seed/shop/400/400'}
                             alt={product.name}
                             className="img-cover"
                             style={{

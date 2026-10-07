@@ -496,7 +496,7 @@ export default function Home() {
                     style={{ position: 'relative', height: '260px', overflow: 'hidden', cursor: 'pointer' }}
                   >
                     <img 
-                      src={product.images ? product.images.split(',')[0] : 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=400&q=80'} 
+                      src={product.images ? (Array.isArray(product.images) ? product.images[0] : product.images.split(',')[0]) : 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=400&q=80'}
                       alt={product.name} 
                       style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s ease' }}
                     />

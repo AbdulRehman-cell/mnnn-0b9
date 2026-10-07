@@ -73,7 +73,7 @@ export default function ProductDetail() {
       await axios.post('/api/cartitems', {
         productId: product._id,
         name: product.name,
-        image: product.images || 'https://picsum.photos/seed/amiprod/600/600',
+        image: (Array.isArray(product.images) ? product.images[0] : product.images) || 'https://picsum.photos/seed/amiprod/600/600',
         price: product.price,
         quantity: 1
       });
@@ -206,8 +206,8 @@ export default function ProductDetail() {
                     {product.badge}
                   </div>
                 )}
-                <img 
-                  src={product.images || 'https://picsum.photos/seed/amiprod/800/800'} 
+                <img
+                  src={(Array.isArray(product.images) ? product.images[0] : product.images) || 'https://picsum.photos/seed/amiprod/800/800'}
                   alt={product.name}
                   className="img-cover img-rounded"
                   style={{ width: '100%', height: 'auto', maxHeight: '550px', objectFit: 'contain', background: '#F8FAFB' }}
@@ -217,7 +217,7 @@ export default function ProductDetail() {
               {/* Multi-angle micro previews */}
               <div style={{ display: 'flex', gap: '12px', marginTop: '16px' }}>
                 <div style={{ flex: 1, border: '2px solid var(--primary)', borderRadius: '8px', overflow: 'hidden', cursor: 'pointer', height: '80px' }}>
-                  <img src={product.images || 'https://picsum.photos/seed/amiprod/300/300'} alt="" className="img-cover" style={{ width: '100%', height: '100%' }} />
+                  <img src={(Array.isArray(product.images) ? product.images[0] : product.images) || 'https://picsum.photos/seed/amiprod/300/300'} alt="" className="img-cover" style={{ width: '100%', height: '100%' }} />
                 </div>
                 <div style={{ flex: 1, border: '1px solid var(--border)', borderRadius: '8px', overflow: 'hidden', opacity: 0.7, cursor: 'pointer', height: '80px' }}>
                   <img src="https://picsum.photos/seed/carbonaction/300/300" alt="Texture Close-up" className="img-cover" style={{ width: '100%', height: '100%' }} />
